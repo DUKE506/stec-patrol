@@ -24,13 +24,17 @@ const ZoneTopNav = () => {
 
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
+          <label className="text-muted-foreground">교대 허용</label>
+          <Switch />
+        </div>
+        <div className="flex items-center gap-2">
           <label className="text-muted-foreground">구역 활성화</label>
           <Switch />
         </div>
 
         {/* NOTE: 일단 모달로 선택하는 방식 / 순서는 드래그 */}
-        <Button icon={SquarePenIcon} iconSize={20} iconStrokeWidth={2}>
-          지점 편집
+        <Button variant="sub" icon={SquarePenIcon} iconSize={16} iconStrokeWidth={2}>
+          수정
         </Button>
       </div>
     </div>

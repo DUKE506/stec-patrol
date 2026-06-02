@@ -1,7 +1,13 @@
 import AppAlertDialog from '@/components/AppAlertDialog'
 import AppIconButton from '@/components/AppIconButton'
 import { Switch } from '@/components/ui/switch'
-import { LockKeyholeIcon, LockKeyholeOpenIcon, Trash2Icon } from 'lucide-react'
+import {
+  ClockIcon,
+  GripVerticalIcon,
+  LockKeyholeIcon,
+  LockKeyholeOpenIcon,
+  Trash2Icon,
+} from 'lucide-react'
 import { useState } from 'react'
 
 const PointCard = () => {
@@ -26,11 +32,33 @@ const PointCard = () => {
   }
 
   return (
-    <div className="relative space-y-2 p-4 border rounded-sm bg-background ">
+    <div className="flex justify-between items-center relative p-4 border rounded-sm bg-background ">
       {/* 헤더 */}
-      <div className="flex items-center justify-end gap-2 cursor-pointer">
-        {/* SEPARATE: 컴포넌트화, 눌러서 삭제 확인 모달 */}
-        {/* FIXME: 스위치 방식보다 버튼식으로 변경 -> 카드 자체를 비활성화 하는 방향으로 */}
+
+      {/* 바디 */}
+      <div className="flex justify-center items-center gap-2 ">
+        <GripVerticalIcon className="text-muted-foreground" />
+        <div
+          className={`flex items-center justify-center text-base font-medium rounded-sm  w-10 h-10 aspect-square p-2 
+          bg-point-bg text-point-foreground
+          `}
+        >
+          1
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="font-medium">정문입구</span>
+          <span className="text-muted-foreground text-xs">정문 CCTV앞, 출입 통제 구역</span>
+        </div>
+      </div>
+      {/* 푸터 */}
+
+      <div className="flex items-center justify-end gap-4 cursor-pointer">
+        <div className="flex gap-2 items-center justify-center text-muted-foreground">
+          <ClockIcon size={16} />3 분
+        </div>
+        <div className="bg-success-bg text-success-foreground font-semibold px-2 py-1 rounded-sm ">
+          QR
+        </div>
         {/* <Switch /> */}
         <AppAlertDialog
           size="sm"
@@ -49,23 +77,7 @@ const PointCard = () => {
         >
           <AppIconButton icon={Trash2Icon} />
         </AppAlertDialog>
-        {/* SEPARATE: 컴포넌트화, 눌러서 삭제 확인 모달 */}
-        {/* <div className="p-1 aspect-square rounded-full border" onClick={() => handleActive(false)}>
-          <LockKeyholeOpenIcon className="text-muted-foreground" size={16} strokeWidth={1.5} />
-        </div>
-        <div className="p-1 aspect-square rounded-full border">
-          <Trash2Icon className="text-muted-foreground" size={16} strokeWidth={1.5} />
-        </div> */}
       </div>
-      {/* 바디 */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center justify-center text-base font-medium w-8 h-8 rounded-full border aspect-square p-2">
-          1
-        </div>
-        <span>정문입구</span>
-      </div>
-      {/* 푸터 */}
-      <span className="text-muted-foreground text-xs">정문 CCTV앞, 출입 통제 구역</span>
       {/* 비활성화시 오버레이로 감싸기 */}
       {!isActive && (
         <div className="absolute top-0 left-0 w-full h-full bg-muted/70 flex items-center justify-center">

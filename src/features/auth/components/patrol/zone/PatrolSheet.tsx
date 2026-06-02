@@ -40,7 +40,8 @@ const PatrolSheetContent = ({ patrol }: { patrol: ZonePatrolType }) => {
 
       <div className="flex flex-col gap-8 py-4">
         {/* 정보 */}
-        <DetailSection label="순찰정보">
+        <PatrolContentBody patrol={patrol} />
+        {/* <DetailSection label="순찰정보">
           <DetailRow label="구역명" value={patrol.name} />
           <DetailRow label="시작일시" value={format(patrol.startedAt, 'yyyy-MM-dd HH:mm:ss')} />
           <DetailRow label="종료일시" value={format(patrol.endedAt, 'yyyy-MM-dd HH:mm:ss')} />
@@ -58,9 +59,36 @@ const PatrolSheetContent = ({ patrol }: { patrol: ZonePatrolType }) => {
             />
           ))}
           <TimeLineDefaultCard type="END" time={patrol.endedAt} />
-        </DetailSection>
+        </DetailSection> */}
       </div>
     </SheetContent>
+  )
+}
+
+const PatrolContentBody = ({ patrol }: { patrol: ZonePatrolType }) => {
+  return (
+    <>
+      {/* 정보 */}
+      <DetailSection label="순찰정보">
+        <DetailRow label="구역명" value={patrol.name} />
+        <DetailRow label="시작일시" value={format(patrol.startedAt, 'yyyy-MM-dd HH:mm:ss')} />
+        <DetailRow label="종료일시" value={format(patrol.endedAt, 'yyyy-MM-dd HH:mm:ss')} />
+        <DetailRow label="순찰결과" value={patrol.result} />
+      </DetailSection>
+      <DetailSection label="타임라인">
+        <TimeLineDefaultCard type="START" time={patrol.startedAt} />
+        {patrol.points.map((p, i) => (
+          <TimeLineCard
+            key={`point` + i}
+            name={p.name}
+            completedAt={p.completedAt}
+            status={p.status}
+            note={p.note}
+          />
+        ))}
+        <TimeLineDefaultCard type="END" time={patrol.endedAt} />
+      </DetailSection>
+    </>
   )
 }
 

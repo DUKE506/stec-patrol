@@ -1,6 +1,8 @@
+import Button from '@/components/Button'
 import PointCard from '@/features/auth/components/location/zones/PointCard'
 import ZoneSideBar from '@/features/auth/components/location/zones/ZoneSideBar'
 import ZoneTopNav from '@/features/auth/components/location/zones/ZoneTopNav'
+import { PlusIcon } from 'lucide-react'
 
 const ZonesPage = () => {
   // 구역목록 선택 시 state담아서 컨텐츠로 넘겨주야함
@@ -26,11 +28,14 @@ const ZonesPage = () => {
       <div className="flex-1 flex flex-col">
         <ZoneTopNav />
         <div className="p-4">
-          <div className="grid xl:grid-cols-5 xl:gap-4">
+          <div className="flex flex-col gap-4 ">
             <PointCard />
             <PointCard />
             <PointCard />
             <PointCard />
+            <Button icon={PlusIcon} size="full" variant="dash">
+              지점 추가
+            </Button>
           </div>
         </div>
       </div>

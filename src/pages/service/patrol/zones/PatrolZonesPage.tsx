@@ -37,7 +37,6 @@ const PatrolZonesPage = () => {
 
   return (
     <div className="flex-1 p-8 flex flex-col gap-12 overflow-auto">
-      <span className="text-xl font-medium">구역 순찰이력</span>
       <AppTable columns={zoneColumns} data={zonePatrols} />
     </div>
   )
