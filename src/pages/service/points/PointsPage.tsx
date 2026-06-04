@@ -1,9 +1,9 @@
-import PointTopNav from '@/features/auth/components/location/points/PointTopNav'
+import PointTopNav from '@/features/points/components/PointTopNav'
 import { useEffect, useState } from 'react'
 
-import PointEmptyCard from '@/features/auth/components/location/points/PointEmptyCard'
-import PointDetail from '@/features/auth/components/location/points/detail/PointDetail'
-import PointList from '@/features/auth/components/location/points/PointList'
+import PointEmptyCard from '@/features/points/components/PointEmptyCard'
+import PointDetail from '@/features/points/components/detail/PointDetail'
+import PointList from '@/features/points/components/PointList'
 
 export interface PointType {
   id: string

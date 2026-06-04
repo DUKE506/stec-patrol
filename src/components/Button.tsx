@@ -24,7 +24,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   default: 'bg-primary text-primary-foreground py-2 px-4 hover:bg-primary/90',
   sub: 'bg-transparent text-foreground border border-border hover:bg-muted',
   destructive: 'bg-transparent text-destructive border border-danger/40 hover:bg-danger/10',
-  dash: 'bg-none border-2 border-dashed text-muted-foreground hover:border-primary hover:text-primary',
+  dash: 'bg-none border-1 border-dashed text-muted-foreground hover:border-point hover:bg-point-bg hover:text-point',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {

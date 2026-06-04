@@ -1,6 +1,5 @@
 import AppAlertDialog from '@/components/AppAlertDialog'
 import AppIconButton from '@/components/AppIconButton'
-import { Switch } from '@/components/ui/switch'
 import {
   ClockIcon,
   GripVerticalIcon,
@@ -9,8 +8,9 @@ import {
   Trash2Icon,
 } from 'lucide-react'
 import { useState } from 'react'
+import type { PointAuthenticationMethod, PointType } from '../types'
 
-const PointCard = () => {
+const PointCard = ({ data }: { data: PointType }) => {
   const [isActive, setIsActive] = useState<boolean>(true)
   // 지점 데이터 전달받아야함
 
@@ -31,34 +31,53 @@ const PointCard = () => {
     setIsActive(status)
   }
 
+  const AuthenticationMethodBadge = (method: PointAuthenticationMethod) => {
+    switch (method) {
+      case 'QR':
+        return (
+          <div className="bg-success-bg text-xs text-success-foreground font-semibold px-2 py-1 rounded-sm ">
+            QR
+          </div>
+        )
+      case 'NFC':
+        return (
+          <div className="bg-point-bg text-xs text-point-foreground font-semibold px-2 py-1 rounded-sm ">
+            NFC
+          </div>
+        )
+    }
+  }
+
   return (
-    <div className="flex justify-between items-center relative p-4 border rounded-sm bg-background ">
+    <div className="flex justify-between items-center relative p-2 border rounded-sm bg-background hover:shadow-sm hover:border-point/20">
       {/* 헤더 */}
 
       {/* 바디 */}
       <div className="flex justify-center items-center gap-2 ">
-        <GripVerticalIcon className="text-muted-foreground" />
+        <GripVerticalIcon className="text-muted-foreground/50" />
         <div
-          className={`flex items-center justify-center text-base font-medium rounded-sm  w-10 h-10 aspect-square p-2 
+          className={`flex items-center justify-center text-sm font-medium rounded-sm  w-8 h-8 aspect-square p-2 
           bg-point-bg text-point-foreground
           `}
         >
-          1
+          {data.order}
         </div>
         <div className="flex flex-col gap-1">
-          <span className="font-medium">정문입구</span>
-          <span className="text-muted-foreground text-xs">정문 CCTV앞, 출입 통제 구역</span>
+          <span className="font-medium">{data.title}</span>
+          <span className="text-muted-foreground text-xs">{data.description}</span>
         </div>
       </div>
       {/* 푸터 */}
 
       <div className="flex items-center justify-end gap-4 cursor-pointer">
         <div className="flex gap-2 items-center justify-center text-muted-foreground">
-          <ClockIcon size={16} />3 분
+          <ClockIcon size={16} />
+          {data.timeLimit} 분
         </div>
-        <div className="bg-success-bg text-success-foreground font-semibold px-2 py-1 rounded-sm ">
-          QR
-        </div>
+        {/* <div className="bg-success-bg text-success-foreground font-semibold px-2 py-1 rounded-sm ">
+          {data.authenticationMethod}
+        </div> */}
+        {AuthenticationMethodBadge(data.authenticationMethod)}
         {/* <Switch /> */}
         <AppAlertDialog
           size="sm"
@@ -87,7 +106,7 @@ const PointCard = () => {
             title="지점을 활성화하시겠습니까?"
             onAction={() => handleActive(true)}
           >
-            <AppIconButton className="p-4 bg-muted" iconSize={24} icon={LockKeyholeIcon} />
+            <AppIconButton className="bg-muted" iconSize={20} icon={LockKeyholeIcon} />
           </AppAlertDialog>
           {/* <div
             className="cursor-pointer p-4 border rounded-sm bg-muted"

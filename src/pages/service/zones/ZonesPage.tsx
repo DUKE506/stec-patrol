@@ -1,10 +1,14 @@
 import Button from '@/components/Button'
-import PointCard from '@/features/auth/components/location/zones/PointCard'
-import ZoneSideBar from '@/features/auth/components/location/zones/ZoneSideBar'
-import ZoneTopNav from '@/features/auth/components/location/zones/ZoneTopNav'
-import { PlusIcon } from 'lucide-react'
+import PointCard from '@/features/zone/components/PointCard'
+import ZoneSideBar from '@/features/zone/components/ZoneSideBar'
+import ZoneTopNav from '@/features/zone/components/ZoneTopNav'
+import type { PointType, ZoneType } from '@/features/zone/types'
+
+import { ClockIcon, PlusIcon } from 'lucide-react'
+import { useState } from 'react'
 
 const ZonesPage = () => {
+  const [selectedZone, setSelectedZone] = useState<ZoneType | null>(null)
   // 구역목록 선택 시 state담아서 컨텐츠로 넘겨주야함
 
   /**
@@ -24,23 +28,46 @@ const ZonesPage = () => {
 
   return (
     <div className="flex flex-1 ">
-      <ZoneSideBar />
+      <ZoneSideBar selected={selectedZone} onSelect={setSelectedZone} />
       <div className="flex-1 flex flex-col">
-        <ZoneTopNav />
-        <div className="p-4">
-          <div className="flex flex-col gap-4 ">
-            <PointCard />
-            <PointCard />
-            <PointCard />
-            <PointCard />
-            <Button icon={PlusIcon} size="full" variant="dash">
-              지점 추가
-            </Button>
-          </div>
-        </div>
+        {selectedZone ? (
+          <>
+            <ZoneTopNav zone={selectedZone} />
+            <div className="flex flex-col gap-4 p-8">
+              {selectedZone.points.map((v, i) => (
+                <PointCard key={i} data={v} />
+              ))}
+              <Button icon={PlusIcon} size="full" variant="dash">
+                지점 추가
+              </Button>
+              <CourseTotal points={selectedZone.points} />
+            </div>
+          </>
+        ) : (
+          <div>코스를 선택해주세요~</div>
+        )}
       </div>
     </div>
   )
 }
 
 export default ZonesPage
+
+const CourseTotal = ({ points }: { points: PointType[] }) => {
+  return (
+    <div className="flex items-center justify-between border rounded-sm bg-background p-4">
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <ClockIcon size={16} />
+        <span>
+          사용지점 {points.filter((v) => v.isActive === true).length} / {points.length} 개
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-muted-foreground font-semibold">총 소요시간</span>
+        <span className="text-point font-bold text-lg">
+          {points.reduce((acc, cur) => acc + cur.timeLimit, 0)} 분
+        </span>
+      </div>
+    </div>
+  )
+}
