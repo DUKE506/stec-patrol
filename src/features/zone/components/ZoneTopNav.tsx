@@ -3,6 +3,8 @@ import { Switch } from '@/components/ui/switch'
 import { SquarePenIcon } from 'lucide-react'
 import type { ZoneType } from '../types'
 import { format } from 'date-fns'
+import AppDialog from '@/components/app/AppDialog'
+import EditZoneForm from '../form/EditZoneForm'
 
 const ZoneTopNav = ({ zone }: { zone: ZoneType }) => {
   // 구역에서 선택한 목록 넘겨받을예정
@@ -21,11 +23,6 @@ const ZoneTopNav = ({ zone }: { zone: ZoneType }) => {
             지점생성 {format(zone.createdAt, 'yyyy.MM.dd')}
           </span>
         </div>
-        {/* <div className="w-0.5 self-stretch bg-border" />
-        <div className="flex items-center gap-2 text-point">
-          <div className="h-2 w-2 rounded-full bg-point " />
-          순찰중
-        </div> */}
       </div>
 
       <div className="flex items-center gap-4">
@@ -39,9 +36,22 @@ const ZoneTopNav = ({ zone }: { zone: ZoneType }) => {
         </div>
 
         {/* NOTE: 일단 모달로 선택하는 방식 / 순서는 드래그 */}
-        <Button variant="sub" icon={SquarePenIcon} iconSize={16} iconStrokeWidth={2}>
-          수정
-        </Button>
+
+        <AppDialog
+          title="구역 수정"
+          description="순찰 구역 정보를 수정합니다."
+          trigger={
+            <SquarePenIcon
+              className={`w-full h-full p-2 border rounded-sm  text-muted-foreground
+                hover:bg-muted cursor-pointer
+                `}
+              size={16}
+              strokeWidth={1.5}
+            />
+          }
+        >
+          <EditZoneForm />
+        </AppDialog>
       </div>
     </div>
   )

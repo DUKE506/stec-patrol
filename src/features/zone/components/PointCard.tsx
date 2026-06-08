@@ -2,6 +2,7 @@ import AppAlertDialog from '@/components/AppAlertDialog'
 import AppIconButton from '@/components/AppIconButton'
 import {
   ClockIcon,
+  EllipsisVerticalIcon,
   GripVerticalIcon,
   LockKeyholeIcon,
   LockKeyholeOpenIcon,
@@ -9,6 +10,13 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import type { PointAuthenticationMethod, PointType } from '../types'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const PointCard = ({ data }: { data: PointType }) => {
   const [isActive, setIsActive] = useState<boolean>(true)
@@ -121,3 +129,20 @@ const PointCard = ({ data }: { data: PointType }) => {
 }
 
 export default PointCard
+
+const ActiveMenu = () => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <EllipsisVerticalIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuGroup>
+          <DropdownMenuItem>{/* 비활성화 */}</DropdownMenuItem>
+          <DropdownMenuItem>{/* 수정 */}</DropdownMenuItem>
+          <DropdownMenuItem>{/* 삭제 */}</DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
