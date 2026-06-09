@@ -42,7 +42,7 @@ const ZoneTopNav = ({ zone }: { zone: ZoneType }) => {
           description="순찰 구역 정보를 수정합니다."
           trigger={
             <SquarePenIcon
-              className={`w-full h-full p-2 border rounded-sm  text-muted-foreground
+              className={`w-9 h-9 p-2 border rounded-sm  text-muted-foreground
                 hover:bg-muted cursor-pointer
                 `}
               size={16}

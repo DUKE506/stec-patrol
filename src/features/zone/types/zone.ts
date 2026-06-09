@@ -1,4 +1,4 @@
-import type { PointType } from './point'
+import type { ZonePointType } from './point'
 
 export interface ZoneType {
   id: string
@@ -7,5 +7,5 @@ export interface ZoneType {
   isRotation: boolean
   isActive: boolean
   createdAt: Date
-  points: PointType[]
+  points: ZonePointType[]
 }

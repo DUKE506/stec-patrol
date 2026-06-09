@@ -29,7 +29,7 @@ interface AppAlertDialogProps {
   icon?: LucideIcon
   title: string
   description?: string
-  children: React.ReactNode
+  children?: React.ReactNode
   size?: AlertDialogSize
 
   variant?: AlertDialogVariant
@@ -37,6 +37,8 @@ interface AppAlertDialogProps {
   cancelLabel?: string
   actionLabel?: string
   onAction: () => void
+  open?: boolean // 추가
+  onOpenChange?: (open: boolean) => void // 추가
 }
 
 const AppAlertDialog = ({
@@ -48,11 +50,13 @@ const AppAlertDialog = ({
   cancelLabel = '취소',
   actionLabel = '확인',
   onAction,
+  open,
+  onOpenChange,
   children,
 }: AppAlertDialogProps) => {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      {children && <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>}
       <AlertDialogContent size={size}>
         <AlertDialogHeader>
           {Icon && (

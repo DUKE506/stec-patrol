@@ -1,10 +1,14 @@
 import Button from '@/components/Button'
-import type { PointType } from '@/pages/service/points/PointsPage'
+
 import { format } from 'date-fns'
 import { MapPinIcon, SquarePenIcon, Trash2Icon } from 'lucide-react'
 import ZoneRow from './ZoneRow'
 import DetailSection from './DetailSection'
 import DetailRow from './DetailRow'
+import type { PointType } from '../../types'
+import AppDialog from '@/components/app/AppDialog'
+import EditPointForm from '../../form/EditPointForm'
+import AppAlertDialog from '@/components/AppAlertDialog'
 
 // 선택지점 정보
 const PointDetail = ({ point }: { point: PointType }) => {
@@ -31,12 +35,28 @@ const PointDetail = ({ point }: { point: PointType }) => {
       </div>
       {/* 푸터 */}
       <div className="flex flex-col gap-4 p-4">
-        <Button icon={SquarePenIcon} size="full" variant="sub">
-          수정
-        </Button>
-        <Button icon={Trash2Icon} size="full" variant="destructive">
-          수정
-        </Button>
+        <AppDialog
+          title="지점 수정"
+          description="지점 정보를 수정할 수 있습니다."
+          trigger={
+            <Button icon={SquarePenIcon} size="full" variant="sub">
+              수정
+            </Button>
+          }
+        >
+          <EditPointForm />
+        </AppDialog>
+        <AppAlertDialog
+          size="sm"
+          icon={Trash2Icon}
+          variant="destructive"
+          title="지점을 삭제하시겠습니까?"
+          onAction={() => {}}
+        >
+          <Button icon={Trash2Icon} size="full" variant="destructive">
+            삭제
+          </Button>
+        </AppAlertDialog>
       </div>
     </div>
   )

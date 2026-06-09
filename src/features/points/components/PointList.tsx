@@ -1,4 +1,5 @@
-import { points, type PointType } from '@/pages/service/points/PointsPage'
+import { points } from '../mock/pointData'
+import type { PointType } from '../types'
 import PointListCard from './PointListCard'
 
 const PointList = ({

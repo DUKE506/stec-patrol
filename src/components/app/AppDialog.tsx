@@ -11,20 +11,33 @@ import {
 interface AppDialogProps {
   title: string
   description?: string
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
   children: React.ReactNode
+  open?: boolean // 추가
+  onOpenChange?: (open: boolean) => void // 추가
 }
 
-const AppDialog = ({ title, description, trigger, children }: AppDialogProps) => {
+const AppDialog = ({
+  title,
+  description,
+  trigger,
+  children,
+  open,
+  onOpenChange,
+}: AppDialogProps) => {
   return (
-    <Dialog>
-      <DialogTrigger className="">{trigger}</DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {trigger && (
+        <DialogTrigger className="" asChild>
+          {trigger}
+        </DialogTrigger>
+      )}
+      <DialogContent className="max-h-[80vh] flex flex-col overflow-hidden p-0">
+        <DialogHeader className="p-4 pb-0">
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
-        {children}
+        <div className="flex flex-col min-h-0 flex-1 p-4 pt-0 ">{children}</div>
       </DialogContent>
     </Dialog>
   )

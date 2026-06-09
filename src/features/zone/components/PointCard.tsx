@@ -1,24 +1,13 @@
 import AppAlertDialog from '@/components/AppAlertDialog'
 import AppIconButton from '@/components/AppIconButton'
-import {
-  ClockIcon,
-  EllipsisVerticalIcon,
-  GripVerticalIcon,
-  LockKeyholeIcon,
-  LockKeyholeOpenIcon,
-  Trash2Icon,
-} from 'lucide-react'
+import { ClockIcon, GripVerticalIcon, LockKeyholeIcon, LockKeyholeOpenIcon } from 'lucide-react'
 import { useState } from 'react'
-import type { PointAuthenticationMethod, PointType } from '../types'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
-const PointCard = ({ data }: { data: PointType }) => {
+import { ActiveMenu } from './point-card/ActiveMenu'
+import AuthenticationBadge from './point-card/AuthenticationBadge'
+import type { ZonePointType } from '../types'
+
+const PointCard = ({ data }: { data: ZonePointType }) => {
   const [isActive, setIsActive] = useState<boolean>(true)
   // 지점 데이터 전달받아야함
 
@@ -38,23 +27,8 @@ const PointCard = ({ data }: { data: PointType }) => {
   const handleActive = (status: boolean) => {
     setIsActive(status)
   }
-
-  const AuthenticationMethodBadge = (method: PointAuthenticationMethod) => {
-    switch (method) {
-      case 'QR':
-        return (
-          <div className="bg-success-bg text-xs text-success-foreground font-semibold px-2 py-1 rounded-sm ">
-            QR
-          </div>
-        )
-      case 'NFC':
-        return (
-          <div className="bg-point-bg text-xs text-point-foreground font-semibold px-2 py-1 rounded-sm ">
-            NFC
-          </div>
-        )
-    }
-  }
+  const handleEdit = () => {}
+  const handleDelete = () => {}
 
   return (
     <div className="flex justify-between items-center relative p-2 border rounded-sm bg-background hover:shadow-sm hover:border-point/20">
@@ -82,46 +56,21 @@ const PointCard = ({ data }: { data: PointType }) => {
           <ClockIcon size={16} />
           {data.timeLimit} 분
         </div>
-        {/* <div className="bg-success-bg text-success-foreground font-semibold px-2 py-1 rounded-sm ">
-          {data.authenticationMethod}
-        </div> */}
-        {AuthenticationMethodBadge(data.authenticationMethod)}
-        {/* <Switch /> */}
-        <AppAlertDialog
-          size="sm"
-          icon={LockKeyholeOpenIcon}
-          title="지점을 비활성화하시겠습니까?"
-          onAction={() => handleActive(false)}
-        >
-          <AppIconButton icon={LockKeyholeOpenIcon} />
-        </AppAlertDialog>
-        <AppAlertDialog
-          size="sm"
-          icon={Trash2Icon}
-          variant="destructive"
-          title="지점을 삭제하시겠습니까?"
-          onAction={() => {}}
-        >
-          <AppIconButton icon={Trash2Icon} />
-        </AppAlertDialog>
+
+        <AuthenticationBadge method={data.authenticationMethod} />
+        <ActiveMenu onActive={handleActive} onEdit={handleEdit} onDelete={handleDelete} />
       </div>
       {/* 비활성화시 오버레이로 감싸기 */}
       {!isActive && (
         <div className="absolute top-0 left-0 w-full h-full bg-muted/70 flex items-center justify-center">
           <AppAlertDialog
             size="sm"
-            icon={LockKeyholeIcon}
+            icon={LockKeyholeOpenIcon}
             title="지점을 활성화하시겠습니까?"
             onAction={() => handleActive(true)}
           >
             <AppIconButton className="bg-muted" iconSize={20} icon={LockKeyholeIcon} />
           </AppAlertDialog>
-          {/* <div
-            className="cursor-pointer p-4 border rounded-sm bg-muted"
-            onClick={() => setIsActive(true)}
-          >
-            <LockKeyholeIcon className="text-muted-foreground" />
-          </div> */}
         </div>
       )}
     </div>
@@ -129,20 +78,3 @@ const PointCard = ({ data }: { data: PointType }) => {
 }
 
 export default PointCard
-
-const ActiveMenu = () => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <EllipsisVerticalIcon />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuGroup>
-          <DropdownMenuItem>{/* 비활성화 */}</DropdownMenuItem>
-          <DropdownMenuItem>{/* 수정 */}</DropdownMenuItem>
-          <DropdownMenuItem>{/* 삭제 */}</DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}

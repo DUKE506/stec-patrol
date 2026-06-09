@@ -32,7 +32,7 @@ export const ZoneNode = ({
             size={16}
             strokeWidth={1}
           /> */}
-          <span className="">{zone.title}</span>
+          <span className="text-xs font-medium">{zone.title}</span>
         </div>
 
         <div

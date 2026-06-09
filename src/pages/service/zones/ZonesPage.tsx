@@ -1,11 +1,15 @@
+import AppDialog from '@/components/app/AppDialog'
+import AppEmpty from '@/components/app/AppEmpty'
 import Button from '@/components/Button'
 import PointCard from '@/features/zone/components/PointCard'
 import ZoneSideBar from '@/features/zone/components/ZoneSideBar'
 import ZoneTopNav from '@/features/zone/components/ZoneTopNav'
-import type { PointType, ZoneType } from '@/features/zone/types'
+import AddPointForm from '@/features/zone/form/AddPointForm'
+import { ZoneTreeData } from '@/features/zone/mocks/zoneData'
+import type { ZonePointType, ZoneType } from '@/features/zone/types'
 
-import { ClockIcon, PlusIcon } from 'lucide-react'
-import { useState } from 'react'
+import { ClockIcon, MapIcon, PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 const ZonesPage = () => {
   const [selectedZone, setSelectedZone] = useState<ZoneType | null>(null)
@@ -26,6 +30,11 @@ const ZonesPage = () => {
    *
    */
 
+  useEffect(() => {
+    if (ZoneTreeData.length < 1) return
+    setSelectedZone(ZoneTreeData[0])
+  }, [ZoneTreeData])
+
   return (
     <div className="flex flex-1 ">
       <ZoneSideBar selected={selectedZone} onSelect={setSelectedZone} />
@@ -37,14 +46,26 @@ const ZonesPage = () => {
               {selectedZone.points.map((v, i) => (
                 <PointCard key={i} data={v} />
               ))}
-              <Button icon={PlusIcon} size="full" variant="dash">
-                지점 추가
-              </Button>
+              <AppDialog
+                title="구역 내 지점 추가"
+                description="구역 내 신규 지점을 추가합니다."
+                trigger={
+                  <Button icon={PlusIcon} size="full" variant="dash">
+                    지점 추가
+                  </Button>
+                }
+              >
+                <AddPointForm currentPoints={selectedZone.points} />
+              </AppDialog>
               <CourseTotal points={selectedZone.points} />
             </div>
           </>
         ) : (
-          <div>코스를 선택해주세요~</div>
+          <AppEmpty
+            icon={MapIcon}
+            title="선택된 구역이 없습니다"
+            description="좌측에서 구역을 선택하거나 새로 생성해주세요"
+          />
         )}
       </div>
     </div>
@@ -53,7 +74,7 @@ const ZonesPage = () => {
 
 export default ZonesPage
 
-const CourseTotal = ({ points }: { points: PointType[] }) => {
+const CourseTotal = ({ points }: { points: ZonePointType[] }) => {
   return (
     <div className="flex items-center justify-between border rounded-sm bg-background p-4">
       <div className="flex items-center gap-2 text-muted-foreground">

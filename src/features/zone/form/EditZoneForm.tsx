@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form'
 import { type FormDataType, zoneSchema } from './schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
-import Input from '@/components/app/Input'
 import Button from '@/components/Button'
+import AppInput from '@/components/app/AppInput'
 
 const EditZoneForm = () => {
   const {
@@ -32,7 +32,7 @@ const EditZoneForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Input
+      <AppInput
         label="구역명"
         required
         placeholder="구역명을 입력해주세요"

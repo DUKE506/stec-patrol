@@ -14,7 +14,7 @@ const ZoneSideBar = ({
   onSelect: React.Dispatch<React.SetStateAction<ZoneType | null>>
 }) => {
   return (
-    <div className="bg-background  border-r w-60">
+    <div className="bg-background  border-r w-80">
       {/* 헤더 */}
       <div className="flex items-center justify-between border-b p-4">
         <span>구역목록</span>

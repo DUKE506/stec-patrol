@@ -1,21 +1,26 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import { useEffect } from 'react'
-import Button from '@/components/Button'
-import { zoneSchema, type FormDataType } from './schema'
 import AppInput from '@/components/app/AppInput'
+import Button from '@/components/Button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
-const AddZoneForm = () => {
+export const pointSchema = z.object({
+  timeLimit: z.number().min(1, '1분 이상 입력해주세요.'),
+})
+
+export type FormDataType = z.infer<typeof pointSchema>
+
+const EditPointForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<FormDataType>({
-    resolver: zodResolver(zoneSchema),
+    resolver: zodResolver(pointSchema),
     defaultValues: {
-      name: '',
+      timeLimit: 1,
     },
   })
 
@@ -34,17 +39,16 @@ const AddZoneForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <AppInput
-        label="구역명"
-        required
-        placeholder="구역명을 입력해주세요"
-        error={errors.name?.message}
-        {...register('name')}
+        label="순찰시간 (분)"
+        placeholder="10분"
+        error={errors.timeLimit?.message}
+        {...register('timeLimit')}
       />
       <Button size="full" type="submit">
-        생성
+        저장
       </Button>
     </form>
   )
 }
 
-export default AddZoneForm
+export default EditPointForm
