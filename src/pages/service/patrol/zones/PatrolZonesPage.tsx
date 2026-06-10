@@ -1,5 +1,10 @@
+import AppEmpty from '@/components/app/AppEmpty'
 import AppTable from '@/components/AppTable'
-import { zoneColumns } from '@/features/auth/components/patrol/zone/ZoneColumn'
+import { PatrolContentBody } from '@/features/patrol-zones/components/PatrolSheet'
+
+import { zoneColumns } from '@/features/patrol-zones/components/ZoneColumn'
+import { LayersIcon } from 'lucide-react'
+import { useState } from 'react'
 
 const PATROL_RESULT = {
   COMPLETE: 'COMPLETE',
@@ -26,6 +31,7 @@ export interface PointPatrolType {
 }
 
 const PatrolZonesPage = () => {
+  const [selectedPatrol, setSelectedPatrol] = useState<ZonePatrolType | null>(null)
   /**
    * 순찰이력 UI 구조 설계
    * 1. 구역 / 지점 탭
@@ -35,9 +41,32 @@ const PatrolZonesPage = () => {
    * ※ 이력은 생성, 수정, 삭제 불가. ONLY 조회
    */
 
+  const handleRowClick = (data: ZonePatrolType) => {
+    setSelectedPatrol(data)
+  }
+
   return (
-    <div className="flex-1 p-8 flex flex-col gap-12 overflow-auto">
-      <AppTable columns={zoneColumns} data={zonePatrols} />
+    <div className="flex-1 flex overflow-auto">
+      <div className="flex-7 flex flex-col items-center p-8 gap-6">
+        <AppTable columns={zoneColumns} data={zonePatrols} searchable onRowClick={handleRowClick} />
+      </div>
+
+      <div className="flex-3 flex flex-col gap-8  border-l bg-background">
+        {selectedPatrol ? (
+          <div className="flex flex-col gap-8 px-4 py-8 overflow-auto">
+            <div className="px-4 ">
+              <span className="text-xl font-semibold ">순찰이력</span>
+            </div>
+            <PatrolContentBody patrol={selectedPatrol} />
+          </div>
+        ) : (
+          <AppEmpty
+            title="순찰이력을 선택해주세요"
+            description="왼쪽 목록에서 이력을 선택하면 상세내용이 표시됩니다."
+            icon={LayersIcon}
+          />
+        )}
+      </div>
     </div>
   )
 }

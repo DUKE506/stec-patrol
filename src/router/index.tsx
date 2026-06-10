@@ -5,7 +5,7 @@ import AuthGuard from './guards/AuthGuard'
 import PointsPage from '@/pages/service/points/PointsPage'
 import ZonesPage from '@/pages/service/zones/ZonesPage'
 import LocationLayout from '@/features/auth/components/location/LocationLayout'
-import PatrolLayout from '@/features/auth/components/patrol/PatrolLayout'
+import PatrolLayout from '@/features/patrol-zones/components/PatrolLayout'
 import PatrolZonesPage from '@/pages/service/patrol/zones/PatrolZonesPage'
 import PatrolPointsPage from '@/pages/service/patrol/points/PatrolPointsPage'
 

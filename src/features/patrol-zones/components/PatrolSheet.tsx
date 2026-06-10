@@ -30,7 +30,7 @@ const PatrolSheet = ({ patrol }: { patrol: ZonePatrolType }) => {
 
 export default PatrolSheet
 
-const PatrolSheetContent = ({ patrol }: { patrol: ZonePatrolType }) => {
+export const PatrolSheetContent = ({ patrol }: { patrol: ZonePatrolType }) => {
   return (
     <SheetContent className="overflow-auto" showCloseButton={false}>
       <SheetHeader>
@@ -65,7 +65,7 @@ const PatrolSheetContent = ({ patrol }: { patrol: ZonePatrolType }) => {
   )
 }
 
-const PatrolContentBody = ({ patrol }: { patrol: ZonePatrolType }) => {
+export const PatrolContentBody = ({ patrol }: { patrol: ZonePatrolType }) => {
   return (
     <>
       {/* 정보 */}
@@ -144,12 +144,12 @@ const TimeLineCard = ({ name, status, completedAt, note }: PointPatrolType) => {
     >
       <div className="flex items-center gap-2">
         {status ? (
-          <div className="p-1.5 rounded-full border">
+          <div className="p-1.5 rounded-full border text-success">
             <CheckIcon size={16} strokeWidth={3} />
           </div>
         ) : (
           <div
-            className={`p-1.5 rounded-full border ${!status ? 'bg-danger border-danger text-danger-foreground' : ''}`}
+            className={`p-1.5 rounded-full border ${!status ? 'bg-danger border-danger text-background' : ''}`}
           >
             <TriangleAlertIcon size={16} strokeWidth={3} />
           </div>

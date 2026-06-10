@@ -21,9 +21,9 @@ export const zoneColumns = [
     header: '결과',
     // 뱃지
   }),
-  // 상세정보는 시트 만들어서 넣으면될듯
-  columnHelper.display({
-    id: 'actions',
-    cell: (props) => <PatrolSheet patrol={props.row.original} />,
-  }),
+  // 반응형 작업. xs 이하일 때만 sheet
+  // columnHelper.display({
+  //   id: 'actions',
+  //   cell: (props) => <PatrolSheet patrol={props.row.original} />,
+  // }),
 ]

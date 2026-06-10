@@ -14,10 +14,11 @@ import { ChevronUpIcon, ChevronDownIcon, ChevronsUpDownIcon } from 'lucide-react
 interface AppTableProps<TData> {
   data: TData[]
   columns: ColumnDef<TData, any>[]
+  onRowClick?: (data: TData) => void
   searchable?: boolean
 }
 
-const AppTable = <TData,>({ data, columns, searchable }: AppTableProps<TData>) => {
+const AppTable = <TData,>({ data, columns, searchable, onRowClick }: AppTableProps<TData>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
 
@@ -35,16 +36,16 @@ const AppTable = <TData,>({ data, columns, searchable }: AppTableProps<TData>) =
   })
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       {/* 검색 */}
-      {/* {searchable && (
+      {searchable && (
         <input
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
           placeholder="검색"
           className="w-64 px-3 py-2 text-sm border rounded-sm bg-background outline-none focus:border-ring"
         />
-      )} */}
+      )}
 
       {/* 테이블 */}
       <div className="border rounded-sm overflow-hidden">
@@ -57,7 +58,7 @@ const AppTable = <TData,>({ data, columns, searchable }: AppTableProps<TData>) =
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
                     className={`
-                      text-left px-4 py-3 font-medium text-muted-foreground
+                      text-left text-xs px-3 py-3 font-medium text-muted-foreground
                       ${header.column.getCanSort() ? 'cursor-pointer select-none hover:text-foreground' : ''}
                     `}
                   >
@@ -78,9 +79,10 @@ const AppTable = <TData,>({ data, columns, searchable }: AppTableProps<TData>) =
                 <tr
                   key={row.id}
                   className="border-b last:border-0 hover:bg-muted/50 transition-colors"
+                  onClick={() => onRowClick?.(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="font-normal px-4 py-3">
+                    <td key={cell.id} className="text-[13px] font-normal px-3 py-3">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
